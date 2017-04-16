@@ -1,0 +1,10 @@
+---
+- name: Configure rsyslog
+  template:
+    dest: /etc/rsyslog.conf
+    group: root
+    mode: u=wr,go=
+    owner: root
+    src: templates/rsyslog.conf.j2
+  notify:
+    - reload rsyslog
