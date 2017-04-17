@@ -22,9 +22,9 @@ $MarkMessagePeriod 3600
 #
 $FileOwner root
 $FileGroup adm
-$FileCreateMode 0640
-$DirCreateMode 0755
-$Umask 0022
+$FileCreateMode {{ rsyslog_file_create_mode }}
+$DirCreateMode {{ rsyslog_dir_create_mode }}
+$Umask {{ rsyslog_umask }}
 
 #
 # Where to place spool and state files

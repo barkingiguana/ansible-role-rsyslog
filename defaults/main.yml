@@ -1,2 +1,5 @@
 ---
 rsyslog_manage_service: yes
+rsyslog_file_create_mode: '0640'
+rsyslog_dir_create_mode: '0755'
+rsyslog_umask: '0022'
