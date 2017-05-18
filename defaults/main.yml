@@ -4,3 +4,5 @@ rsyslog_file_create_mode: '0640'
 rsyslog_dir_create_mode: '0755'
 rsyslog_umask: '0022'
 rsyslog_default_rules: true
+rsyslog_include_patterns:
+  - /etc/rsyslog.d/*.conf

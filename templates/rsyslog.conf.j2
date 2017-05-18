@@ -27,4 +27,6 @@ $Umask {{ rsyslog_umask }}
 
 $WorkDirectory /var/spool/rsyslog
 
-$IncludeConfig /etc/rsyslog.d/*.conf
+{% for rsyslog_include_pattern in rsyslog_include_patterns %}
+$IncludeConfig {{ rsyslog_include_pattern }}
+{% endfor %}
