@@ -8,3 +8,22 @@
     src: templates/rsyslog.conf.j2
   notify:
     - reload rsyslog
+
+- name: Create default rules
+  template:
+    dest: /etc/rsyslog.d/default-rules.conf
+    group: root
+    mode: u=wr,go=
+    owner: root
+    src: templates/default-rules.conf.j2
+  notify:
+    - reload rsyslog
+  when:
+    - rsyslog_default_rules
+
+- name: Remove default rules
+  file:
+    dest: /etc/rsyslog.d/default-rules.conf
+    state: absent
+  when:
+    - not rsyslog_default_rules
