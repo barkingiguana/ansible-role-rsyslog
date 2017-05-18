@@ -1,5 +1,16 @@
 ---
+- name: Clean configuration
+  become: true
+  file:
+    dest: "/etc/rsyslog.d/{{ item }}"
+    state: absent
+  with_items:
+    - 20-ufw.conf
+    - 21-cloudinit.conf
+    - 50-default.conf
+
 - name: Configure rsyslog
+  become: true
   template:
     dest: /etc/rsyslog.conf
     group: root
@@ -10,6 +21,7 @@
     - reload rsyslog
 
 - name: Create default rules
+  become: true
   template:
     dest: /etc/rsyslog.d/default-rules.conf
     group: root
@@ -22,6 +34,7 @@
     - rsyslog_default_rules
 
 - name: Remove default rules
+  become: true
   file:
     dest: /etc/rsyslog.d/default-rules.conf
     state: absent
