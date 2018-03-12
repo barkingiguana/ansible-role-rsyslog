@@ -3,4 +3,8 @@ rsyslog_manage_service: true
 rsyslog_file_create_mode: '0640'
 rsyslog_dir_create_mode: '0755'
 rsyslog_umask: '0022'
+rsyslog_configuration_directory: /etc/rsyslog.d
+rsyslog_default_configuration: true
+rsyslog_default_configuration_file_name: {{ rsyslog_configuration_directory }}/000-default-configuration.conf
 rsyslog_default_rules: true
+rsyslog_default_rules_file_name: {{ rsyslog_configuration_directory }}/025-default-rules.conf

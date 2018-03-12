@@ -2,7 +2,7 @@
 - name: Clean configuration
   become: true
   file:
-    dest: "/etc/rsyslog.d/{{ item }}"
+    dest: "{{ rsyslog_configuration_directory }}/{{ item }}"
     state: absent
   with_items:
     - 20-ufw.conf
@@ -20,10 +20,31 @@
   notify:
     - reload rsyslog
 
+- name: Create default config
+  become: true
+  template:
+    dest: {{ rsyslog_default_configuration_file_name }}
+    group: root
+    mode: u=wr,go=
+    owner: root
+    src: templates/default-configuration.conf.j2
+  notify:
+    - reload rsyslog
+  when:
+    - rsyslog_default_configuration
+
+- name: Remove default configuration
+  become: true
+  file:
+    dest: {{ rsyslog_default_configuration_file_name }}
+    state: absent
+  when:
+    - not rsyslog_default_configuration
+
 - name: Create default rules
   become: true
   template:
-    dest: /etc/rsyslog.d/default-rules.conf
+    dest: {{ rsyslog_default_rules_file_name }}
     group: root
     mode: u=wr,go=
     owner: root
@@ -36,7 +57,7 @@
 - name: Remove default rules
   become: true
   file:
-    dest: /etc/rsyslog.d/default-rules.conf
+    dest: {{ rsyslog_default_rules_file_name }}
     state: absent
   when:
     - not rsyslog_default_rules

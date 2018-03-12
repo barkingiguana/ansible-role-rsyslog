@@ -1,0 +1,28 @@
+{{ ansible_managed | comment }}
+
+$ModLoad imuxsock # provides support for local system logging
+$ModLoad imklog   # provides kernel logging support
+$ModLoad immark  # provides --MARK-- message capability
+{% if rsyslog_mark_message_period is defined %}
+$MarkMessagePeriod {{ rsyslog_mark_message_period }}
+{% endif %}
+
+{% if rsyslog_udp_port is defined %}
+# provides UDP syslog reception
+$ModLoad imudp
+$UDPServerRun {{ rsyslog_udp_port }}
+{% endif %}
+
+{% if rsyslog_tcp_port is defined %}
+# provides TCP syslog reception
+$ModLoad imtcp
+$InputTCPServerRun {{ rsyslog_tcp_port }}
+{% endif %}
+
+$FileOwner root
+$FileGroup adm
+$FileCreateMode {{ rsyslog_file_create_mode }}
+$DirCreateMode {{ rsyslog_dir_create_mode }}
+$Umask {{ rsyslog_umask }}
+
+$WorkDirectory /var/spool/rsyslog
